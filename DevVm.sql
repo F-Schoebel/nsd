@@ -1,298 +1,297 @@
-BEGIN
-    EXECUTE IMMEDIATE 'drop Table SYSTEM.KUNDE';
-EXCEPTION
-    WHEN OTHERS THEN NULL;
-END;
+begin
+    execute immediate 'drop table system.kunde';
+exception
+    when others then null;
+end;
 /
 
-BEGIN
-    EXECUTE IMMEDIATE 'drop Table SYSTEM.ENTWICKLER';
-EXCEPTION
-    WHEN OTHERS THEN NULL;
-END;
+begin
+    execute immediate 'drop table system.entwickler';
+exception
+    when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Table SYSTEM.SOFTWAREARTIKEL';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop table system.softwareartikel';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Table SYSTEM.WARENKORBEINTRAG';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop table system.warenkorbeintrag';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Table SYSTEM.PUBLISHER';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop table system.publisher';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Table SYSTEM.BESTELLUNG';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop table system.bestellung';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type BESTELLUNGSEINTRAEGE_NT_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type bestellungseintraege_nt_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type STANDORT_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type standort_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type STANDORT_LISTE_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type standort_liste_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type ENTWICKLER_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type entwickler_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type KUNDE_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type kunde_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type SOFTWAREARTIKEL_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type softwareartikel_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type Computerspiel_typ force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type computerspiel_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type Anwendungssoftware_typ force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type anwendungssoftware_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type BESTELLEINTRAEGE_NT_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type bestelleintraege_nt_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type BESTELLEINTRAG_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type bestelleintrag_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type PERSON_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type person_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type WARENKORBEINTRAG_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type warenkorbeintrag_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type PUBLISHER_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type publisher_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type BESTELLUNG_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type bestellung_typ force';
+exception
+  when others then null;
+end;
 /
 
-BEGIN
-  EXECUTE IMMEDIATE 'drop Type BESTELLEINTRAG_TYP force';
-EXCEPTION
-  WHEN OTHERS THEN NULL;
-END;
+begin
+  execute immediate 'drop type bestelleintrag_typ force';
+exception
+  when others then null;
+end;
 /
 
-Create Type Person_typ as Object (
-    VORNAME varchar(30),
-    NAME varchar(30),
-    GEBURTSDATUM date,
-    EMAIL varchar(30),
-    TELEFONNUMMER varchar(30),
-    IBAN varchar(20)
+create type person_typ as object (
+    vorname varchar(30),
+    name varchar(30),
+    geburtsdatum date,
+    email varchar(30),
+    telefonnummer varchar(30),
+    iban varchar(20)
 );
 
 /
 
-Create Type Standort_typ as Object (
-    LAND varchar(50),
-    STADT varchar(50),
-    PLZ varchar(10),
-    STRASSE varchar(50),
-    HAUSNR varchar(10)
+create type standort_typ as object (
+    land varchar(50),
+    stadt varchar(50),
+    plz varchar(10),
+    strasse varchar(50),
+    hausnr varchar(10)
 );
 
 /
 
-Create Type Standort_liste_typ as VARRAY(5)of Standort_typ; 
+create type standort_liste_typ as varray(5)of standort_typ;
 
 /
 
-Create Type Kunde_typ as Object (
-    KundenNr int,
-    Person Person_typ,
-    Standorte Standort_liste_typ
+create type kunde_typ as object (
+    kundennr int,
+    person person_typ,
+    standorte standort_liste_typ
 );
 
 /
 
-Create Type Entwickler_typ as Object (
-    EntwicklerID int,
-    Firmenname varchar(30),
-    Person Person_typ,
-    Standorte Standort_liste_typ
+create type entwickler_typ as object (
+    entwicklerid int,
+    firmenname varchar(30),
+    person person_typ,
+    standorte standort_liste_typ
 );
 
 /
 
-Create Type Softwareartikel_typ as Object (
-    ArtikelID integer,
-    Entwickler REF Entwickler_typ,
-    SOFTWARENAME varchar(50),
-    EINZELPREIS double precision,
-    ERSCHEINUNGSDATUM date
-)NOT FINAL;
+create type softwareartikel_typ as object (
+    artikelid integer,
+    entwickler ref entwickler_typ,
+    softwarename varchar(50),
+    einzelpreis double precision,
+    erscheinungsdatum date
+)not final;
 
 /
 
-Create Type Publisher_typ as Object (
-    PublisherID int,
-    Firmenname varchar(30),
-    Standorte Standort_liste_typ
+create type publisher_typ as object (
+    publisherid int,
+    firmenname varchar(30),
+    standorte standort_liste_typ
 );
 
 /
 
-Create Type Computerspiel_typ under Softwareartikel_typ (
-    Altersbegrenzung integer,
-    Genre varchar(30),
-    SequelID integer,
-    Publisher REF Publisher_typ
+create type computerspiel_typ under softwareartikel_typ (
+    altersbegrenzung integer,
+    genre varchar(30),
+    sequelid integer,
+    publisher ref publisher_typ
 );
 
 /
 
-Create Type Anwendungssoftware_typ under Softwareartikel_typ (
-    Lizenz varchar(30)    
+create type anwendungssoftware_typ under softwareartikel_typ (
+    lizenz varchar(30)
 );
 
 /
 
-Create Type Bestelleintrag_typ as Object (
-    Artikel REF Softwareartikel_typ,
-    Anzahl int,
-    Einzelpreis double precision
+create type bestelleintrag_typ as object (
+    artikel ref softwareartikel_typ,
+    anzahl int,
+    einzelpreis double precision
 );
 
 /
 
-CREATE TYPE BESTELLUNGSEINTRAEGE_NT_TYP AS TABLE OF Bestelleintrag_typ;
+create type bestellungseintraege_nt_typ as table of bestelleintrag_typ;
 
 /
 
-Create Type Bestellung_typ as Object (
-    BestellID int,
-    Kunde REF Kunde_typ,
-    Bestelldatum Date,
-    Status varchar(30),
-    Bestellungen BESTELLUNGSEINTRAEGE_NT_TYP
+create type bestellung_typ as object (
+    bestellid int,
+    kunde ref kunde_typ,
+    bestelldatum date,
+    status varchar(30),
+    bestellungen bestellungseintraege_nt_typ
 );
 
 /
 
-Create Type Warenkorbeintrag_typ as Object (
-    EintragID int,
-    Anzahl int,
-    Artikel REF Softwareartikel_typ,
-    Kunde REF Kunde_typ
+create type warenkorbeintrag_typ as object (
+    eintragid int,
+    anzahl int,
+    artikel ref softwareartikel_typ,
+    kunde ref kunde_typ
 );
 
 /
 
-Create Table SYSTEM.KUNDE OF Kunde_typ (
-    KundenNr PRIMARY Key
-); 
+create table system.kunde of kunde_typ (
+    kundennr primary key
+);
 
 /
 
-Create Table SYSTEM.ENTWICKLER OF Entwickler_typ (
-    EntwicklerID PRIMARY KEY
-); 
+create table system.entwickler of entwickler_typ (
+    entwicklerid primary key
+);
 
 /
 
-Create Table SYSTEM.PUBLISHER OF Publisher_typ (
-    PublisherID PRIMARY KEY
-); 
+create table system.publisher of publisher_typ (
+    publisherid primary key
+);
 
 /
 
-Create Table SYSTEM.SOFTWAREARTIKEL (
-    ArtikelID Integer PRIMARY KEY,
-    Softwareartikel Softwareartikel_typ
-); 
+create table system.softwareartikel (
+    artikelid integer primary key,
+    softwareartikel softwareartikel_typ
+);
 
 /
 
-Create Table SYSTEM.WARENKORBEINTRAG OF Warenkorbeintrag_typ (
-    EintragID PRIMARY KEY 
-); 
+create table system.warenkorbeintrag of warenkorbeintrag_typ (
+    eintragid primary key
+);
 
 /
 
-Create Table SYSTEM.BESTELLUNG OF Bestellung_typ (
-    BestellID PRIMARY KEY
-) NESTED TABLE
-    Bestellungen STORE AS BESTELLEINTRAEGE_TAB; 
+create table system.bestellung of bestellung_typ (
+    bestellid primary key
+) nested table
+    bestellungen store as bestelleintraege_tab;
 
 /
 
 
---SELECT TREAT(PERSON as PERSON_TYP).NAME FROM KUNDE
+--select treat(person as person_typ).name from kunde
 
---SELECT k.Kundennummer, n.* FROM Kunde k, TABLE(Standorte) n;
+--select k.kundennummer, n.* from kunde k, table(standorte) n;
 
---SELECT n.*, s.* FROM Kunde k, Entwickler e, TABLE(e.Standorte) n, TABLE(k.Standorte) s;
-
+--select n.*, s.* from kunde k, entwickler e, table(e.standorte) n, table(k.standorte) s;
