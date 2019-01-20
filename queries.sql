@@ -25,7 +25,7 @@ join
 on
     vorgaenger.artikel_id = nachfolger.prequel_id
 where
-    nachfolger.softwarename = 'Red Dead Leo 2';
+    nachfolger.softwarename = 'Better Game';
     --nachfolger.artikelid = 2
 
 

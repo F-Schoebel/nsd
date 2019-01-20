@@ -9,10 +9,10 @@ insert into system.kunde values
         1,
         person_typ
         (
-            'Leo',
-            'Tobisch',
+            'John',
+            'Doe',
             to_date('10.01.1993', 'dd.mm.yyyy'),
-            'leo@w-hs.de',
+            'xX_doe_Xx@hotmail.de',
             '0905 666666',
             '123456'
         ),
@@ -21,9 +21,9 @@ insert into system.kunde values
             standort_typ
             (
                 'Deutschland',
-                'Gelsenkirchen',
-                '12345',
-                'supernstrasse',
+                'El Dorado',
+                '13371',
+                'Laternenstrasse',
                 '434'
             )
         )
@@ -37,7 +37,7 @@ insert into system.publisher values
     publisher_typ
     (
         1,
-        'Bubisoft',
+        'Game Factory',
         standort_liste_typ
         (
             standort_typ
@@ -45,7 +45,7 @@ insert into system.publisher values
                 'Deutschland',
                 'Berlin',
                 '75648',
-                'Bubisoftstraße',
+                'Bubisoftstrasse',
                 '21'
             ),
             standort_typ
@@ -53,7 +53,7 @@ insert into system.publisher values
                 'Belgien',
                 'Brüssel',
                 '92046',
-                'Gropplerstraße',
+                'Gropplerstrasse',
                 '87'
             )
         )
@@ -67,7 +67,7 @@ insert into system.entwickler values
     entwickler_typ
     (
         1,
-        'Super-inc',
+        'Super-Inc',
         person_typ
         (
             'Flo',
@@ -84,7 +84,7 @@ insert into system.entwickler values
                 'Deutschland',
                 'Gelsenkirchen',
                 '12345',
-                'superstrasse',
+                'Dachstrasse',
                 '431'
             )
         )
@@ -106,7 +106,7 @@ insert into system.computerspiel values
             where
                 p.entwickler_id = 1
         ),
-        'Red Dead Leo',
+        'Good Game',
         59.99,
         to_date('10.02.2018','DD.MM.YYYY'),
         18,
@@ -138,7 +138,7 @@ insert into system.computerspiel values
             where
                 p.entwickler_id = 1
         ),
-        'Red Dead Leo 2',
+        'Better Game',
         59.99,
         to_date('05.01.2019','DD.MM.YYYY'),
         18,
@@ -246,7 +246,7 @@ insert into system.anwendungssoftware values
             where
                 p.entwickler_id = 1
         ),
-        'Cheattool xy',
+        'Spreadsheet-Master-2001',
         10.00,
         to_date('12.03.2018','DD.MM.YYYY'),
         'unbegrenzt'
