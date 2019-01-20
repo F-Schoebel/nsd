@@ -11,21 +11,47 @@ create or replace procedure add_article
 as
     article_count number;
     waren_id number;
+    temp_value number; --speichern einer computerspielvariable um zu prüfen, ob es sich um ein computerspiel oder anwendungssoftware handelt.
+    next_id number;
 begin
+    --ermittelt die nächste warenkrobid.
     begin
-    select 
-        w.anzahl, w.warenkorbeintragid into article_count, waren_id
-    from
-        system.warenkorbeintrag w
-    where
-        treat(deref(w.kunde) as kunde_typ).kundenid = kunden_id
-    and
-        treat(deref(w.artikel) as softwareartikel_typ).artikelid = article_id;
-        
-    exception
-      when no_data_found then
-        article_count := 0;
-        waren_id := 0;
+        select max(warenkorbeintragid)+1 into next_id from system.warenkorbeintrag;
+    end;
+    if next_id is null then
+        next_id := 1;
+    end if;    
+    --erkennt, ob der gewollte artikel bereits im Warenkorb des Kunden enthalten ist, wenn ja, dann wird die Warenid und anzahl gespeichert
+    begin
+        select 
+            w.anzahl, w.warenkorbeintragid 
+        into 
+            article_count, waren_id
+        from
+            system.warenkorbeintrag w
+        where
+            treat(deref(w.kunde) as kunde_typ).kundenid = kunden_id
+        and
+            treat(deref(w.artikel) as softwareartikel_typ).artikelid = article_id;
+            
+        exception
+          when no_data_found then
+            article_count := 0;
+            waren_id := 0;
+    end;
+    --erkennt ob es sich um ein computerspiel oder anwendungssoftware handelt und speichert dies in temp_value ab.
+    begin
+        select 
+            c.altersbegrenzung 
+        into 
+            temp_value
+        from
+            system.computerspiel c
+        where
+            c.artikelid = article_id;            
+        exception
+          when no_data_found then
+            temp_value := -1;
     end;
     
     if article_count >= 1 then
@@ -35,18 +61,44 @@ begin
             w.anzahl = w.anzahl+1
         where
             w.warenkorbeintragid = waren_id;
-    else 
+    elsif temp_value = -1 then  
         insert into system.warenkorbeintrag values
         (       
             warenkorbeintrag_typ
             ( 
-                (select max(warenkorbeintragid)+1 from warenkorbeintrag),
+                next_id,
                 1,
                 (
                     select
                         ref(p) 
                     from
-                        system.computerspiel p
+                        system.anwendungssoftware p 
+                    where
+                        p.artikelid = article_id
+                ),
+                (
+                    select 
+                        ref(p)
+                    from
+                        system.kunde p
+                    where
+                        p.kundenid = kunden_id
+                )
+            )
+        );
+    --wird geprüft, ob der käufer alt genug für das Videospiel ist.
+    elsif temp_value < calculate_age(kunden_id) then
+        insert into system.warenkorbeintrag values
+        (       
+            warenkorbeintrag_typ
+            ( 
+                next_id,
+                1,
+                (
+                    select
+                        ref(p) 
+                    from
+                        system.computerspiel p 
                     where
                         p.artikelid = article_id
                 ),
@@ -105,4 +157,25 @@ begin
         where
             warenkorbeintragid = waren_id;
     end if;
+end;
+
+/
+
+--berechnet das Alter eines Kunden um prüfen zu können, ob die Person das gewollte Spiel kaufen kann.
+
+create or replace function calculate_age
+    (kunden_id in integer)
+    return number
+is
+    age number;
+begin
+    select 
+        trunc(months_between(sysdate, TREAT(k.person as person_typ).geburtsdatum))/12 
+    into
+        age
+    from
+        system.kunde k
+    where
+        k.kundenid = kunden_id;
+    return age;
 end;
