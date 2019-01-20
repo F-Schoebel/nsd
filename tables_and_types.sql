@@ -51,105 +51,7 @@ exception
 end;
 /
 
-begin
-  execute immediate 'drop type bestellungseintraege_nt_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type standort_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type standort_liste_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type entwickler_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type kunde_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type softwareartikel_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type computerspiel_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type anwendungssoftware_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type bestelleintraege_nt_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type bestelleintrag_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type person_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type warenkorbeintrag_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type publisher_typ force';
-exception
-  when others then null;
-end;
-/
-
-begin
-  execute immediate 'drop type bestellung_typ force';
-exception
-  when others then null;
-end;
-/
-
-create type person_typ as object (
+create or replace type person_typ force as object (
     vorname varchar(30),
     name varchar(30),
     geburtsdatum date,
@@ -160,7 +62,7 @@ create type person_typ as object (
 
 /
 
-create type standort_typ as object (
+create or replace type standort_typ force as object (
     land varchar(50),
     stadt varchar(50),
     plz varchar(10),
@@ -170,11 +72,11 @@ create type standort_typ as object (
 
 /
 
-create type standort_liste_typ as varray(5)of standort_typ;
+create or replace type standort_liste_typ force as varray(5)of standort_typ;
 
 /
 
-create type kunde_typ as object (
+create or replace type kunde_typ force as object (
     kunden_id int,
     person person_typ,
     standorte standort_liste_typ
@@ -182,7 +84,7 @@ create type kunde_typ as object (
 
 /
 
-create type entwickler_typ as object (
+create or replace type entwickler_typ force as object (
     entwickler_id int,
     firmenname varchar(30),
     person person_typ,
@@ -191,7 +93,7 @@ create type entwickler_typ as object (
 
 /
 
-create type softwareartikel_typ as object (
+create or replace type softwareartikel_typ force as object (
     artikel_id int,
     entwickler ref entwickler_typ,
     softwarename varchar(50),
@@ -201,7 +103,7 @@ create type softwareartikel_typ as object (
 
 /
 
-create type publisher_typ as object (
+create or replace type publisher_typ force as object (
     publisher_id int,
     firmenname varchar(30),
     standorte standort_liste_typ
@@ -209,7 +111,7 @@ create type publisher_typ as object (
 
 /
 
-create type computerspiel_typ under softwareartikel_typ (
+create or replace type computerspiel_typ under softwareartikel_typ (
     altersbegrenzung integer,
     genre varchar(30),
     prequel_id integer,
@@ -218,13 +120,13 @@ create type computerspiel_typ under softwareartikel_typ (
 
 /
 
-create type anwendungssoftware_typ under softwareartikel_typ (
+create or replace type anwendungssoftware_typ under softwareartikel_typ (
     lizenz varchar(30)
 );
 
 /
 
-create type bestelleintrag_typ as object (
+create or replace type bestelleintrag_typ force as object (
     artikel ref softwareartikel_typ,
     anzahl int,
     einzelpreis double precision
@@ -232,11 +134,11 @@ create type bestelleintrag_typ as object (
 
 /
 
-create type bestelleintraege_nt_typ as table of bestelleintrag_typ;
+create or replace type bestelleintraege_nt_typ force as table of bestelleintrag_typ;
 
 /
 
-create type bestellung_typ as object (
+create or replace type bestellung_typ force as object (
     bestell_id int,
     kunde ref kunde_typ,
     bestelldatum date,
@@ -246,7 +148,7 @@ create type bestellung_typ as object (
 
 /
 
-create type warenkorbeintrag_typ as object (
+create or replace type warenkorbeintrag_typ force as object (
     warenkorbeintrag_id int,
     anzahl int,
     artikel ref softwareartikel_typ,
