@@ -5,14 +5,14 @@
 --mit einer N:M Beziehung:
 --gib mir alle Artikelnamen von allen Bestellungen
 
-select 
+select
     TREAT(deref(nt.artikel) as softwareartikel_typ).softwarename as bestellter_artikel
 from
     system.bestellung b, table(b.bestellungen) nt;
-    
-    
-    
-    
+
+
+
+
 --rekursive Beziehung
 --gib mir den Vorgänger von Spiel X
 
@@ -23,24 +23,24 @@ from
 join
     system.computerspiel vorgaenger
 on
-    vorgaenger.artikelid = nachfolger.prequelid
+    vorgaenger.artikel_id = nachfolger.prequel_id
 where
     nachfolger.softwarename = 'Red Dead Leo 2';
     --nachfolger.artikelid = 2
-   
-   
-   
-    
---Vererbung:
---Gib mir alle gekauften Artikel von Kunde X, die von Typ Computerspiel sind.    
 
-select 
+
+
+
+--Vererbung:
+--Gib mir alle gekauften Artikel von Kunde X, die von Typ Computerspiel sind.
+
+select
     TREAT(deref(nt.artikel) as computerspiel_typ).softwarename as bestellter_artikel
 from
     system.bestellung b, table(b.bestellungen) nt
-where     
-    TREAT(deref(b.kunde) as kunde_typ).kundenid = 1;
-    
+where
+    TREAT(deref(b.kunde) as kunde_typ).kunden_id = 1;
+
 
 
 
@@ -49,26 +49,26 @@ where
 
 select
     c.softwarename
-from 
+from
     system.computerspiel c
 where
-    c.publisher is not null;  
-    
-    
+    c.publisher is not null;
+
+
 
 
 --Komposition:
 --Gib mir alle Bestelldetails der Bestellungs-ID X.
 
-select 
-    b.bestellid,
+select
+    b.bestell_id,
     b.bestelldatum,
     b.status,
-    TREAT(deref(b.kunde) as kunde_typ).kundenid as kundenid,
+    TREAT(deref(b.kunde) as kunde_typ).kunden_id as kunden_id,
     TREAT(TREAT(deref(b.kunde) as kunde_typ).person as person_typ).vorname || ' ' ||
     TREAT(TREAT(deref(b.kunde) as kunde_typ).person as person_typ).name as name,
-    TREAT(deref(nt.artikel) as softwareartikel_typ).softwarename as bestellter_artikel    
+    TREAT(deref(nt.artikel) as softwareartikel_typ).softwarename as bestellter_artikel
 from
     system.bestellung b, table(b.bestellungen) nt
 where
-    b.bestellid = 1;
+    b.bestell_id = 1;

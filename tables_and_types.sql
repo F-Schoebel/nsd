@@ -175,7 +175,7 @@ create type standort_liste_typ as varray(5)of standort_typ;
 /
 
 create type kunde_typ as object (
-    kundenid int,
+    kunden_id int,
     person person_typ,
     standorte standort_liste_typ
 );
@@ -183,7 +183,7 @@ create type kunde_typ as object (
 /
 
 create type entwickler_typ as object (
-    entwicklerid int,
+    entwickler_id int,
     firmenname varchar(30),
     person person_typ,
     standorte standort_liste_typ
@@ -192,7 +192,7 @@ create type entwickler_typ as object (
 /
 
 create type softwareartikel_typ as object (
-    artikelid int,
+    artikel_id int,
     entwickler ref entwickler_typ,
     softwarename varchar(50),
     einzelpreis double precision,
@@ -202,7 +202,7 @@ create type softwareartikel_typ as object (
 /
 
 create type publisher_typ as object (
-    publisherid int,
+    publisher_id int,
     firmenname varchar(30),
     standorte standort_liste_typ
 );
@@ -212,7 +212,7 @@ create type publisher_typ as object (
 create type computerspiel_typ under softwareartikel_typ (
     altersbegrenzung integer,
     genre varchar(30),
-    prequelid integer,
+    prequel_id integer,
     publisher ref publisher_typ
 );
 
@@ -237,7 +237,7 @@ create type bestelleintraege_nt_typ as table of bestelleintrag_typ;
 /
 
 create type bestellung_typ as object (
-    bestellid int,
+    bestell_id int,
     kunde ref kunde_typ,
     bestelldatum date,
     status varchar(30),
@@ -247,7 +247,7 @@ create type bestellung_typ as object (
 /
 
 create type warenkorbeintrag_typ as object (
-    warenkorbeintragid int,
+    warenkorbeintrag_id int,
     anzahl int,
     artikel ref softwareartikel_typ,
     kunde ref kunde_typ
@@ -256,43 +256,43 @@ create type warenkorbeintrag_typ as object (
 /
 
 create table system.kunde of kunde_typ (
-    kundenid primary key
+    kunden_id primary key
 );
 
 /
 
 create table system.entwickler of entwickler_typ (
-    entwicklerid primary key
+    entwickler_id primary key
 );
 
 /
 
 create table system.publisher of publisher_typ (
-    publisherid primary key
+    publisher_id primary key
 );
 
 /
 
 create table system.computerspiel of computerspiel_typ (
-    artikelid primary key
+    artikel_id primary key
 );
 
 /
 
 create table system.anwendungssoftware of anwendungssoftware_typ (
-    artikelid primary key
+    artikel_id primary key
 );
 
 /
 
 create table system.warenkorbeintrag of warenkorbeintrag_typ (
-    warenkorbeintragid primary key
+    warenkorbeintrag_id primary key
 );
 
 /
 
 create table system.bestellung of bestellung_typ (
-    bestellid primary key
+    bestell_id primary key
 ) nested table
     bestellungen store as bestelleintraege_tab;
 
