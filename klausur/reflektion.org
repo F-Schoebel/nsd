@@ -1,6 +1,24 @@
+* 01 [3/3]
 
-* 01 [0/0]
-** Was ist das CAP-Theorem? (eigene Frage)
+** DONE Was sind die drei fundamentalen DB Qualitäten? (eigene Frage)
+
+- Verlässlichkeit
+- Skalierbarkeit
+- Wartbarkeit
+
+** DONE Was ist vertikales / horizontales Skalieren?
+
+Bei vertikal: bessere Hardware (geht nur begrenzt)
+
+Bei horizontal: mehr Server
+
+** DONE Was ist das CAP-Theorem? (eigene Frage)
+
+Maximal zwei der drei Größen bei verteilten Datenbanken möglich:
+- Konsistenz
+- Verfügbarkeit
+- Ausfallsicherheit
+
 * 02 [7/9]
 ** TODO Was ist Fehlanpassung?
 
@@ -218,7 +236,7 @@ END;
 
 ** TODO Wie kann eine relationale Datenbank in eine Webapplikation eingebunden werden?
 
-* 07 [0/0]
+* 07 [0/6]
 
 ** TODO Was muss eine objektorientierte DB leisten?** Wodurch unterscheidet sich XML von JSON?
 
