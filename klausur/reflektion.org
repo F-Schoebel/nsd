@@ -188,8 +188,6 @@ END;
 *** Trigger
 ** TODO Wie werden gespeicherte Prozeduren / Funktionen aufgerufen?
 
-* 05
-
 * 06 [1/11]
 ** TODO Welche Möglichkeiten bietet eXist um XML zu speichern, ändern, auszuwählen?
 
@@ -219,3 +217,17 @@ END;
 ** TODO Worin besteht SQL-XML-Mismatch?
 
 ** TODO Wie kann eine relationale Datenbank in eine Webapplikation eingebunden werden?
+
+* 07 [0/0]
+
+** TODO Was muss eine objektorientierte DB leisten?** Wodurch unterscheidet sich XML von JSON?
+
+** TODO Welche Möglichkeiten bieten dokumentorientierte Datenbanken um speichern, ändern, abzufragen?
+
+** TODO Wie funktioniert eine Aggregation Pipeline + Map-reduce-algo?
+
+** TODO Wie / wann wird map-reduce verwendet?
+
+** TODO Welche Möglichkeiten gibt es um GEO-JSON Dokumente zu verwalten?
+
+** TODO Welche Vor/Nachteile bietet EInsatz von dokumentorientierten DBs?
