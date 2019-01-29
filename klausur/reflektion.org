@@ -67,7 +67,7 @@
 
  - nf2 erlaubt Darstellen von Beziehung
  - nf2 erlaubt Verschachtelung von Strukturen
-* 03
+* 03 [4/6]
 ** DONE Wie wird die Objektidentität sichergestellt?
  Praktisch kann man Referenzen vergleichen:
 
