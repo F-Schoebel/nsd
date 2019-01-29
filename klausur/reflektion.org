@@ -1,40 +1,97 @@
-* DONE Wie löst NF2 die Fehlanpassung?
 
-- nf2 erlaubt Darstellen von Beziehung
-- nf2 erlaubt Verschachtelung von Strukturen
+* 01 [0/0]
+** Was ist das CAP-Theorem? (eigene Frage)
+* 02 [7/9]
+** TODO Was ist Fehlanpassung?
 
-* DONE Welche Schnittstellen bietet existDB?
-  - HTTP-Rest Schnittstelle
-  - xml:db Schnittstelle für Javaapplikationen
-* DONE Was ist NF2?
+ Problem, das Auftritt beim Abbilden von objektorientierten Strukturen
+ im relationalen Modell.
 
-- Non first normalform
-- normalform wäre das einfache relationale Datenmodell
-- nfnf erlaubt erstellen beliebig tiefer hierarchischer Strukturen im Datenmodell
-* DONE Was ist EmbeddedSQL?
+ |             |
+ | Beziehungen |
+ | Verhalten   |
+ |             |
 
-Precompileranweisungen erlauben Einbinden von SQL-Befehlen im
-Programmcode. Existiert für eine Vielzahl von Programmiersprachen.
+** DONE Welche Lösungsansätze zur Überwindung von Fehlanpassung gibt es?
+*** ORM
+ Objekt-relationales Mapping.
 
-Beispielhaft:
-# select * from kunden :k_list
+ Klassen werden auf Tabellen abgebildet, Instanzvariablen auf
+ Tabellenattribute. Genauer Ablauf abhängig vom Framework und
+ Programmiersprache. Annotationen geben zusätzliche Informationen zum
+ automatisierten Erstellen der Tabellen.
+ Bei Hibernate etwa leichte Performance-Einbuße (java.reflection).
 
-wobei =#= ein marker für den Precompiler ist und =:k_list= eine Variable
-für die Rückgabe übergibt. Beispiel SQLJ.
-* DONE Welche Typerweiterungen brachte SQL-99?
+*** ORDBMS
+ Objekt-relationale Datenbank Management Systeme
 
-- boolean
-- distinct types
-- structured user defined types (Basis für ORBMNS)
-* DONE Wie können Entitäten verglichen werden?
-Objektvergleich nur bei gleichem Typ(oder Subtypbeziehung)
+ Datenbank erlaubt entsprechend SQL:2003 definieren von Typen, Vererbung, Methoden.
+** DONE Was ist EmbeddedSQL?
 
-... where a=b
-* DONE Welche Herausforderungen hat eine objektorientierte DB?
+ Precompileranweisungen erlauben Einbinden von SQL-Befehlen im
+ Programmcode. Existiert für eine Vielzahl von Programmiersprachen.
 
-- Bewältigung der Fehlanpassung zwischen relationalen und objektorientierten Datenbanken.
-- persistente Verwaltung von Objekten
-* DONE Wie können mehrwertige Attribute implementiert werden?
+ Beispielhaft:
+ # select * from kunden :k_list
+
+ wobei =#= ein marker für den Precompiler ist und =:k_list= eine Variable
+ für die Rückgabe übergibt. Beispiel SQLJ.
+** DONE Was muss ein ORM/ORDBMS leisten?
+
+ - Lösung/Kaschieren der Fehlanpassung
+ - konsistentes Speichern von Objekten
+ - Anbindung an objektorientierte Sprachen
+ - verschachtelte Strukturen
+ - Performanz
+** DONE Was ist OR-Mapping? Beispiel
+ Klassen werden auf Tabellen abgebildet, Instanzvariablen auf
+ Tabellenattribute. Genauer Ablauf abhängig vom Framework und
+ Programmiersprache. Annotationen geben zusätzliche Informationen zum
+ automatisierten Erstellen der Tabellen.
+ Bei Hibernate etwa leichte Performance-Einbuße (java.reflection).
+** DONE Welche Herausforderungen hat eine objektorientierte DB?
+
+ - Bewältigung der Fehlanpassung zwischen relationalen und objektorientierten Datenbanken.
+ - persistente Verwaltung von Objekten
+** DONE Was ist NF2?
+
+ - Non first normalform
+ - normalform wäre das einfache relationale Datenmodell
+ - nfnf erlaubt erstellen beliebig tiefer hierarchischer Strukturen im Datenmodell
+** DONE Welche Typerweiterungen brachte SQL-99?
+
+ - boolean
+ - distinct types
+ - structured user defined types (Basis für ORBMNS)
+** DONE Wie löst NF2 die Fehlanpassung?
+
+ - nf2 erlaubt Darstellen von Beziehung
+ - nf2 erlaubt Verschachtelung von Strukturen
+* 03
+** DONE Wie wird die Objektidentität sichergestellt?
+ Praktisch kann man Referenzen vergleichen:
+
+ =REF(a)=REF(b)=
+
+ Technisch hat jede Instanz eine eindeutige OID.
+** DONE Wie werden Objekttypen definiert & genutzt?
+
+ #+BEGIN_SRC sql
+create type a_typ (
+...
+)
+
+create table a of a_typ (
+
+)
+ #+END_SRC
+** DONE Was ist eine Objekttabelle?
+
+ =create table person of person_type= erstellt eine Objekttabelle. Bei
+ Objekttabellen tragen Tabellen Eigenschaften der angegebenen Typen.
+ Mit den Typen können Hierarchien und Eigenschaften definiert werden;
+ in den Tabellen werden die Werte gespeichert.
+** DONE Wie können mehrwertige Attribute implementiert werden?
 ** Varrays
 
 #+BEGIN_SRC sql
@@ -55,107 +112,44 @@ create table m (
   b nt_type
 ) nested table b store as b_table;
 #+END_SRC
-* DONE Was ist OR-Mapping?
-Klassen werden auf Tabellen abgebildet, Instanzvariablen auf
-Tabellenattribute. Genauer Ablauf abhängig vom Framework und
-Programmiersprache. Annotationen geben zusätzliche Informationen zum
-automatisierten Erstellen der Tabellen.
-Bei Hibernate etwa leichte Performance-Einbuße (java.reflection).
-* DONE Welche Lösungsansätze zur Überwindung von Fehlanpassung gibt es?
-** ORM
-Objekt-relationales Mapping.
+** TODO Wie können Objekte referenziert werden / Beziehungen umgesetzt?
+** TODO Wie können uni- & bidirektionale attributierte Beziehungen abgebildet werden?
+* 04a [2/6]
+** DONE Worin entscheidet sich Modellierung bei relationalem Modell & objektrelationalen Modell?
 
-Klassen werden auf Tabellen abgebildet, Instanzvariablen auf
-Tabellenattribute. Genauer Ablauf abhängig vom Framework und
-Programmiersprache. Annotationen geben zusätzliche Informationen zum
-automatisierten Erstellen der Tabellen.
-Bei Hibernate etwa leichte Performance-Einbuße (java.reflection).
+ Beziehungen werden nicht mehr durch Relationen dargestellt (sondern
+ durch REFs).  Das objektrelationale Modell erlaubt objektorientierte
+ Mechanismen, wie etwa Vererbung, Objektidentität & verschachtelte Objekte.
 
-** ORDBMS
-Objekt-relationale Datenbank Management Systeme
+ Es bestehen nicht nur Funktionen, welche auf Daten operieren: Objekte
+ können selber Methoden tragen.
+** TODO Wie kann Verhalten von Entitäten implementiert werden?
 
-Datenbank erlaubt entsprechend SQL:2003 definieren von Typen, Vererbung, Methoden.
-* DONE Wie werden Objekttypen definiert & genutzt?
+ methoden
+** DONE Wie können Entitäten verglichen werden?
+ Objektvergleich nur bei gleichem Typ(oder Subtypbeziehung)
 
-#+BEGIN_SRC sql
-create type a_typ (
-...
-)
+ ... where a=b
+** TODO Wie können Objekte und Relationen gemeinsam genutzt werden?
+** TODO Wie kann auf relationale Tabellen objektorientiert zugegriffen werden?
+** TODO Wie performant ist der Zugriff auf: relationale Tabellen, Objekttabellen, Objektviews?
+* 04b [1/6]
+** DONE Was ist eine gespeicherte Funktion?
+ Relationale Datenbanksysteme liefern vorgefertige Funktionen, wie etwa
+ =avg= und =sum=.
 
-create table a of a_typ (
+ Man kann selber Funktionen erstellen um auf Daten zu
+ operieren. Exceptions erlauben das Modellieren von Fehlverhalten.
+** TODO Mach Beispiel zur Implementierung gespeicherter Funktion.
+** TODO Wie werden SQL-Prozeduren verwendet? Wann erfolgt dieses?
+ mit call
+** TODO Was ist ein Cursor? Verwendung?
+** TODO Unterschiede zwischen gespeicherte Funktionen, Prozeduren und Trigger?
 
-)
-#+END_SRC
-* DONE Wie wird die Objektidentität sichergestellt?
-Praktisch kann man Referenzen vergleichen:
+*** Funktionen
 
-=REF(a)=REF(b)=
-
-Technisch hat jede Instanz eine eindeutige OID.
-* DONE Was ist eine Objekttabelle?
-
-=create table person of person_type= erstellt eine Objekttabelle. Bei
-Objekttabellen tragen Tabellen Eigenschaften der angegebenen Typen.
-Mit den Typen können Hierarchien und Eigenschaften definiert werden;
-in den Tabellen werden die Werte gespeichert.
-
-* DONE Worin entscheidet sich Modellierung bei relationalem Modell & objektrelationalen Modell?
-
-Beziehungen werden nicht mehr durch Relationen dargestellt (sondern
-durch REFs).  Das objektrelationale Modell erlaubt objektorientierte
-Mechanismen, wie etwa Vererbung, Objektidentität & verschachtelte Objekte.
-
-Es bestehen nicht nur Funktionen, welche auf Daten operieren: Objekte
-können selber Methoden tragen.
-* DONE Was ist eine gespeicherte Funktion?
-Relationale Datenbanksysteme liefern vorgefertige Funktionen, wie etwa
-=avg= und =sum=.
-
-Man kann selber Funktionen erstellen um auf Daten zu
-operieren. Exceptions erlauben das Modellieren von Fehlverhalten.
-* DONE Was muss ein ORM/ORDBMS leisten?
-
-- Lösung/Kaschieren der Fehlanpassung
-- konsistentes Speichern von Objekten
-- Anbindung an objektorientierte Sprachen
-- verschachtelte Strukturen
-- Performanz
-* TODO Wie werden SQL-Prozeduren verwendet? Wann erfolgt dieses?
-mit call
-* TODO Mach Beispiel zur Implementierung gespeicherter Funktion.
-
-* TODO Wie performant ist der Zugriff auf: relationale Tabellen, Objekttabellen, Objektviews?
-* TODO Wie kann auf relationale Tabellen objektorientiert zugegriffen werden?
-* TODO Wie können Objekte und Relationen gemeinsam genutzt werden?
-* TODO Wie kann Verhalten von Entitäten implementiert werden?
-
-methoden
-
-* TODO Wie können uni- & bidirektionale attributierte Beziehungen abgebildet werden?
-* TODO Wie können Objekte referenziert werden / Beziehungen umgesetzt?
-
-* TODO Vor- & Nachteile von eXistDB & Oracle XML-Erweiterung?
-
-* TODO Wie wird ein XML-Dokument validiert?
-
-* TODO Welche Möglichkeiten bietet eXist um XML zu speichern, ändern, auszuwählen?
-
-* TODO Welche Möglichkeiten bieten XPath & XQuery um XML-ELemente auszuwählen?
-** XPath
-Hol den Text vom ersten Absatz:
-/dokument/absaetze[0]/text()
-
-/dokument/absaetze[0]/[@title="1."] ????
-** XQuery
-
-for, if, group/order by
-
-* TODO Unterschiede zwischen gespeicherte Funktionen, Prozeduren und Trigger?
-
-** Funktionen
-
-- BSP Funktion mit Exception
-  #+BEGIN_SRC sql
+ - BSP Funktion mit Exception
+   #+BEGIN_SRC sql
 CREATE OR REPLACE FUNCTION kehrwert (zahl IN INTEGER) RETURN NUMBER
   AS
     rueckgabe NUMERIC(9,8);
@@ -171,15 +165,15 @@ BEGIN
   WHEN myfehlermeldung
   THEN raise_application_error(-20500,'Kehrwert existiert nicht.');
 END;
-  #+END_SRC
-- avg, sum sind Funktionen
-- Anwendung: =select anrede(KNr) from kunden=
-- ein Rückgabewert
+   #+END_SRC
+ - avg, sum sind Funktionen
+ - Anwendung: =select anrede(KNr) from kunden=
+ - ein Rückgabewert
 
-** Prozeduren
+*** Prozeduren
 
-- Beispiel
-  #+BEGIN_SRC sql
+ - Beispiel
+   #+BEGIN_SRC sql
 CREATE OR REPLACE PROCEDURE kundenanrede_proc (knr IN INTEGER)
   IS
     anrede VARCHAR(60);
@@ -187,18 +181,41 @@ BEGIN
   SELECT Kundenanrede2(knr) INTO anrede FROM dual;
   dbms_output.put_line(anrede);
 END;
-  #+END_SRC
+   #+END_SRC
 
-- mehrere Rückgabewerte möglich
+ - mehrere Rückgabewerte möglich
 
-** Trigger
+*** Trigger
+** TODO Wie werden gespeicherte Prozeduren / Funktionen aufgerufen?
 
-* TODO Was ist Fehlanpassung?
+* 05
 
-Problem, das Auftritt beim Abbilden von objektorientierten Strukturen
-im relationalen Modell.
+* 06 [1/11]
+** TODO Welche Möglichkeiten bietet eXist um XML zu speichern, ändern, auszuwählen?
 
-|             |
-| Beziehungen |
-| Verhalten   |
-|             |
+** TODO Welche Möglichkeiten bieten XPath & XQuery um XML-ELemente auszuwählen?
+*** XPath
+ Hol den Text vom ersten Absatz:
+ /dokument/absaetze[0]/text()
+
+ /dokument/absaetze[0]/[@title="1."] ????
+*** XQuery
+
+ for, if, group/order by
+** DONE Welche Schnittstellen bietet existDB?
+   - HTTP-Rest Schnittstelle
+   - xml:db Schnittstelle für Javaapplikationen
+** TODO Wie wird ein XML-Dokument validiert?
+** TODO Vor- & Nachteile von eXistDB & Oracle XML-Erweiterung?
+
+** TODO Wie ist die Performance bei objekt-relationalen Datenhaltung ?
+
+** TODO Wie kann auf relationale Tabellen objektorientiert zugegriffen werden?
+
+** TODO Wie können XML dokumente in Oracle generiert werden?
+
+** TODO Wie erfolgt Suche in XML Dokumenten?
+
+** TODO Worin besteht SQL-XML-Mismatch?
+
+** TODO Wie kann eine relationale Datenbank in eine Webapplikation eingebunden werden?
