@@ -111,7 +111,7 @@ Bei Hibernate etwa leichte Performance-Einbuße (java.reflection).
 
 Diese Eigenschaften sind notwendig bei objektorientiertem Modell.
 
-* 03 [5/6]
+* 03 [6/6]
 ** DONE Wie wird die Objektidentität sichergestellt?
 
 - Praktisch kann man Referenzen vergleichen:
@@ -170,38 +170,57 @@ Mit Referenzen.
 #+BEGIN_SRC sql
 create type a_type as object (
   nr number,
-  bruder REF(b_type)
+  bruder REF b_type
 )
 
 insert into a_tab values (1, (Select REF(b) from b_tab b where b.id=2))
 #+END_SRC
 
-** TODO Wie können uni- & bidirektionale attributierte Beziehungen abgebildet werden?
+** DONE Wie können uni- & bidirektionale attributierte Beziehungen abgebildet werden?
 
 - unidirektional (Referenz nur in eine Richtung)
 - bidirektional (Objekte referenzieren sich gegenseitig), Trigger um
   Inkonsistenz zu vermeiden(wenn der eine gelöscht wird, wird der
   andere gelöscht)
 
-* 04a [2/6]
+* 04a [6/6]
 ** DONE Worin entscheidet sich Modellierung bei relationalem Modell & objektrelationalen Modell?
 
- Beziehungen werden nicht mehr durch Relationen dargestellt (sondern
- durch REFs).  Das objektrelationale Modell erlaubt objektorientierte
- Mechanismen, wie etwa Vererbung, Objektidentität & verschachtelte Objekte.
+Beziehungen werden nicht mehr durch Relationen dargestellt (sondern
+durch REFs).  Das objektrelationale Modell erlaubt objektorientierte
+Mechanismen, wie etwa Vererbung, Objektidentität & verschachtelte Objekte.
 
- Es bestehen nicht nur Funktionen, welche auf Daten operieren: Objekte
- können selber Methoden tragen.
-** TODO Wie kann Verhalten von Entitäten implementiert werden?
+Es bestehen nicht nur Funktionen, welche auf Daten operieren: Objekte
+können selber Methoden tragen.
 
- methoden
+** DONE Wie kann Verhalten von Entitäten implementiert werden?
+
+Types können Methoden haben. Member & statische Methoden.
+
 ** DONE Wie können Entitäten verglichen werden?
- Objektvergleich nur bei gleichem Typ(oder Subtypbeziehung)
 
- ... where a=b
-** TODO Wie können Objekte und Relationen gemeinsam genutzt werden?
-** TODO Wie kann auf relationale Tabellen objektorientiert zugegriffen werden?
-** TODO Wie performant ist der Zugriff auf: relationale Tabellen, Objekttabellen, Objektviews?
+Objektvergleich nur bei gleichem Typ(oder Subtypbeziehung)
+
+Das geht mit: =where a=b=.
+
+Wenn Identität gesucht wird: =ref(a)=ref(b)=.
+
+** DONE Wie können Objekte und Relationen gemeinsam genutzt werden?
+
+Objekte können mit 1:1-, 1:n-, m:n-Relationen miteinander verknüpft
+werden.
+
+** DONE Wie kann auf relationale Tabellen objektorientiert zugegriffen werden?
+
+- OR-Mapping
+- ORDBMS
+
+** DONE Wie performant ist der Zugriff auf: relationale Tabellen, Objekttabellen, Objektviews?
+
+- relationale Tabellen: Anzahl Requests wenig Auswirkung auf Zeit
+- objekttabellen: Anzahl Requests -> Zeit steigt stetig
+- Objektviews: Anzahl Requests -> Zeit steigt stetig(aber stärker)
+
 * 04b [1/6]
 ** DONE Was ist eine gespeicherte Funktion?
  Relationale Datenbanksysteme liefern vorgefertige Funktionen, wie etwa
